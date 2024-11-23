@@ -10,12 +10,15 @@ for i = 1:n
 end
 
 [~, ~, V] = svd(A);
-%f = V(:,size(V));
 
-F = reshape(V(:,end),3,3);
+f = V(:,end);
+
+F = reshape(f,3,3);
+
+%impose rank 2 of final matrix F
 
 [U, D, V] = svd(F);
-D(3,3) = 0; %impose rank 2 of final matrix F
+D(3,3) = 0; 
 F = U*D*V';
 
 end
