@@ -19,7 +19,7 @@ function [bestF, consensus, outliers] = ransacF(P1, P2, th)
         P1iter = P1(:, perm(1:8)); % select 8 random pairs
         P2iter = P2(:, perm(1:8)); % select 8 random pairs
 
-        F = EightPointsAlgorithm_v2(P1iter', P2iter');
+        F = EightPointsAlgorithmN(P1iter', P2iter');
 
         residuals = testF(F, P1, P2); 
         fprintf('Iterazione %d:',ii);

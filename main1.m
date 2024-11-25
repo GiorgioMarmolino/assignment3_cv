@@ -12,7 +12,7 @@ P2_norm = [P2, ones(size(P2,1),1)];
 
 
 F_v1 = EightPointsAlgorithm(P1_norm,P2_norm);
-F_v2 = EightPointsAlgorithm_v2(P1_norm,P2_norm);
+F_v2 = EightPointsAlgorithmN(P1_norm,P2_norm);
 
 check_F(P1_norm', P2_norm', F_v1);
 check_F(P1_norm', P2_norm', F_v2)

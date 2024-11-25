@@ -1,4 +1,4 @@
-function [F] = EightPointsAlgorithm_v2(P1,P2)
+function [F] = EightPointsAlgorithmN(P1,P2)
 
     %Calling function with transposed matrices according to how it has been
     %implemented
