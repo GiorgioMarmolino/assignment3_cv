@@ -4,6 +4,7 @@ addpath("Mire\Mire\")
 addpath("input\")
 
 %% Part_1
+
 P1 = load("Mire\Mire\Mire1.points");
 P2 = load("Mire\Mire\Mire2.points");
 
@@ -19,14 +20,22 @@ check_F(P1_norm', P2_norm', F_v2)
 
 %% Part_2
 
-img_1 = imread('Mire\Mire\Mire1.pgm');
-img_2 = imread('Mire\Mire\Mire2.pgm');
+ % img_1 = imread('Rubik\Rubik\Rubik1.pgm');
+ % img_2 = imread('Rubik\Rubik\Rubik2.pgm');
+ % img_1 = imread('Mire\Mire\Mire1.pgm');
+ % img_2 = imread('Mire\Mire\Mire2.pgm');
+  img_1_1 = imread('photo\4.jpg');
+  img_2_1 = imread('photo\2.jpg');
 
-M = findMatches(img_1, img_2, 'SIFT', 0.8);
+  img_1=im2gray(img_1_1);
+  img_2=im2gray(img_2_1);
+
+M = findMatches(img_1, img_2, 'SURF', 0.75);
 show_matches(img_1, img_2, M, 0, 10);
 
-P1 = M(:,1:2);
-P2 = M(:,3:4);
+%inverto perche sift/surf le da invertite
+P1 = M(:,[2 1]);
+P2 = M(:,[4 3]);
 
 P1_norm = [P1, ones(size(P1,1),1)];
 P2_norm = [P2, ones(size(P2,1),1)];
@@ -34,11 +43,31 @@ P2_norm = [P2, ones(size(P2,1),1)];
 P1_norm = P1_norm';
 P2_norm = P2_norm';
 
-[bestF, consensus, outliers] = ransac_code(P1_norm, P2_norm, 0.1);
+[bestF, consensus, outliers] = ransac_code(P1_norm, P2_norm, 0.001);
 
 P1_cons = consensus(1:3,:);
 P2_cons = consensus(4:6,:);
 
-check_F(P2_cons, P1_cons, bestF);
+check_F(P1_cons, P2_cons, bestF);
+
+
+%% Evaluation 
+
+%epipolar
+P1_1 = load("Mire\Mire\Mire1.points");
+P2_1 = load("Mire\Mire\Mire2.points");
+
+visualizeEpipolarLines(img_1, img_2, F_v1, P1_1, P2_1);
+visualizeEpipolarLines(img_1, img_2, F_v2, P1_1, P2_1);
+
+visualizeEpipolarLines(img_1, img_2, bestF, P1, P2);
+
+[U, D, V] = svd(F_v1);
+e_left = U(:, end); % epipole left
+e_right = V(:, end); % epipole right
+
+e_left = e_left / e_left(end);
+e_right = e_right / e_right(end);
+
 
 

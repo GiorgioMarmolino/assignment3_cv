@@ -5,13 +5,13 @@ function [list] = findMatches(img1, img2, type, THRESH)
 % f1_all and f2_all contain the keypoints positions 
 % d1_all and d2_all contain the sift descriptors 
 
-points1 = detectSIFTFeatures(img1);
+points1 = detectFASTFeatures(img1);
 f1_all = points1.Location;
-d1_all = extractFeatures(img1,points1,Method="SIFT");
+d1_all = extractFeatures(img1,points1,Method="SURF");
 
-points2 = detectSIFTFeatures(img2);
+points2 = detectFASTFeatures(img2);
 f2_all = points2.Location;
-d2_all = extractFeatures(img2,points2,Method="SIFT");
+d2_all = extractFeatures(img2,points2,Method="SURF");
 
 
 f1_all = f1_all';
@@ -104,7 +104,7 @@ elseif(strcmp(type, 'NCC'))
     end
 
     
-elseif(strcmp(type,'SIFT'))
+elseif(strcmp(type,'SIFT') || strcmp(type,'SURF'))
 
 
     %% MATCHING USING SIFT DESCRIPTORS

@@ -13,7 +13,7 @@ end
 
 f = V(:,end);
 
-F = reshape(f,3,3);
+F = reshape(f,3,3)';
 
 %impose rank 2 of final matrix F
 
