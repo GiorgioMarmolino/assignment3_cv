@@ -1,0 +1,40 @@
+1- match che vengono sono abbastanza corretti nella visualizzazione (alcuni vengono storti)
+2- a ogni esecuzione del codice i punti presi dal ransac influenzano di molto la matrice F stimata e quindi certe volte si arriva ad un caso degenere delle epipolar lines (epipolo sull'immagine)
+3- il calcolo dell'epipolo è giusto
+4- valore della threshold a 0.5 se è troppo bassa? (lei la usa a 0.75)
+5- abbiamo lasciato come nel similarity fcn i descrittori che utilizzano la distanza euclidea invece di implementare gli istogrammi
+
+1- è una procedura approssimata; se vanno bene lo valuto verificando a livello visivo (collegamento di stessi punti da linea) e numero di punti corretti sufficente da permettere la stima della matrice fondamentale; 
+
+2 e 4- soglia 0.75; solo surf, risultato ragionevole; con soglia 0.5 usando il ransac usava solo questi punti e il ransac fallisva. Per come sono acquisite le immagini le rette dovrebbero essere orizzontali con epipoli fuori dall'immagine. Piani immagini abbastanza vicini da essere coplanari; epipolo molto fuori dall'immagine quindi. Come report è ok.
+Una soglia critica di ransac ; inlier coppia rispetto stima f verifichi il vincolo epipolare; il valore ideale di zero mai perchè è una procedura approssimata. 
+Valore critico è la soglia (usato da noi ora ok 0,001); pasticcio nel calcolo della prob di ransac (colpa sua); facendo fare più iterazioni (es. max 2000) dovrebbe avere maggiore stabilità per cui prima o poi trova una F valida; per epipolo dentro non sa che dire. 
+
+sanity check: dalle due immagini identificare a mano un insieme di corrispondenze posizionate e belle, stimare la stima della f su quei punti, dovremmo avere la f che otterremmo in modo automatico; le rette lei se le aspettava con l'epipolo fuori; da scrivere nel report che abbiamo fatto a mano e tra i risultati di ransac ci aspettiamo questa quindi. 
+
+in linea generale ci siamo, lei verifica ransac.
+
+3 - Il calcolo degli epipoli è corretto; 
+
+5- abbiamo lasciato la distanza; non influenza sull'instabilità che abbiamo riscontrato; l'intersezione tra istogrammi è una misura secca che darebbe un grado di libertà in meno stringendo di più. Quindi meglio mantenere la distanza per il calcolo;
+
+
+ULTERIORE: abbassare ancroa un po' la soglia di ransac fino a 0.00001; comunque l'instabilità di ransac non le torna. Per il report ci siamo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
