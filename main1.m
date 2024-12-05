@@ -24,8 +24,8 @@ check_F(P1_norm', P2_norm', F_v2);
  % img_2 = imread('Rubik\Rubik\Rubik2.pgm');
  mire_1 = imread('Mire\Mire\Mire1.pgm');
  mire_2 = imread('Mire\Mire\Mire2.pgm');
-  img_1_1 = imread('photo\4.jpg');
-  img_2_1 = imread('photo\2.jpg');
+  img_1_1 = imread('photo\2.jpg');
+  img_2_1 = imread('photo\4.jpg');
 
   img_1=im2gray(img_1_1);
   img_2=im2gray(img_2_1);
