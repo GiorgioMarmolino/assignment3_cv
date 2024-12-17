@@ -71,8 +71,8 @@ load('input\matched_points_better.mat')
 P1_m = movingPoints1;
 P2_m = fixedPoints1;
 
-P1_norm_m = [P1_m, ones(size(P1_m,1),1)];
-P2_norm_m = [P2_m, ones(size(P2_m,1),1)];
+P1_norm_m = [P1_m, ones(size(P1,1),1)];
+P2_norm_m = [P2_m, ones(size(P2,1),1)];
 
 [bestF_m, consensus_m, outliers_m] = ransacF(P1_norm_m', P2_norm_m', 0.0001);
 
@@ -84,10 +84,32 @@ check_F(P1_norm_m', P2_norm_m', bestF_m);
 visualizeEpipolarLines(img_1, img_2, bestF_m,P1_m,P2_m);
 
 %--------------------------------------
+%Epipols F Rubik 
+[U, D, V] = svd(F_v1);
+e_left = U(:, end); % epipole left
+e_right = V(:, end); % epipole right
 
-% Epipole Computation for All Fundamental Matrices
+e_left = e_left / e_left(end);
+e_right = e_right / e_right(end);
+disp('left Epipol F Rubik');disp(e_left);
+disp('right Epipol F Rubik');disp(e_right);
 
-F_matrices = {F_v1, F_v2, bestF, bestF_m};
-names = {'F_v1', 'Normalized F_v2', 'RANSAC F', 'Manual F'};
+%Epipols Normalized F Rubik 
+[U, D, V] = svd(F_v2);
+e_left = U(:, end); % epipole left
+e_right = V(:, end); % epipole right
 
-computeEpipoles(F_matrices, names);
+e_left = e_left / e_left(end);
+e_right = e_right / e_right(end);
+disp('left Epipol F Rubik');disp(e_left);
+disp('right Epipol F Rubik');disp(e_right);
+
+%Epipols manual F Rubik 
+[U, D, V] = svd(bestF_m);
+e_left = U(:, end); % epipole left
+e_right = V(:, end); % epipole right
+
+e_left = e_left / e_left(end);
+e_right = e_right / e_right(end);
+disp('left Epipol F Rubik');disp(e_left);
+disp('right Epipol F Rubik');disp(e_right);
