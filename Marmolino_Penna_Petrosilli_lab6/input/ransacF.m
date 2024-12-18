@@ -51,7 +51,7 @@ function [residuals] = testF(F, P1, P2)
     n = size(P1,2);
     residuals = zeros(1, n);
     for i = 1 : n
-        residuals(i) = P2(:,i)' * F * P1(:,i);
+        residuals(i) = abs(P2(:,i)' * F * P1(:,i));
     end
 
 end
